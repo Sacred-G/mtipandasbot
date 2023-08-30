@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 from dotenv import load_dotenv
 from langchain.agents import create_pandas_dataframe_agent
 from langchain.chat_models import ChatOpenAI
@@ -8,7 +9,7 @@ from langchain.llms import OpenAI
 from langchain.agents.agent_types import AgentType
 from html_templates import css, user_template, bot_template
 
-
+os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
 def main():
     st.set_page_config(page_title="MTI Pandas Agent")
     logo_url = "https://i.imgur.com/9DLn81j.png"
@@ -81,7 +82,7 @@ def main():
             st.pyplot(fig)
 
     # Define large language model (LLM)
-    llm = OpenAI(temperature=TEMP)
+    llm = OpenAI(temperature=TEMP,openai_api_key=os.getenv('OPENAI_API_KEY'))
 
     # Define pandas df agent
     agent = create_pandas_dataframe_agent(llm, data, verbose=True) 
