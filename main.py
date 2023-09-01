@@ -63,8 +63,8 @@ def main():
     if data is not None:
 
     # Display Data Head
-    st.write("Data Preview:")
-    st.dataframe(data.head(50)) 
+        st.write("Data Preview:")
+        st.dataframe(data.head(50)) 
     
     
     chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
