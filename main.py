@@ -39,7 +39,7 @@ def main():
     file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
 
     if file:
-    file_type = file.type  # Get the MIME type of the uploaded file
+        file_type = file.type  # Get the MIME type of the uploaded file
     if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
         # ...
     elif file_type == "text/csv":
