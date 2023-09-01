@@ -53,7 +53,7 @@ def main():
 
             st.dataframe(data.head(50))
         
-         except Exception as e:
+        except Exception as e:
             st.error(f"An error occurred: {e}")
 
     else:
