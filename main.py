@@ -68,15 +68,10 @@ def main():
     
     if 'data' in locals() and data is not None:
         chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
-        x_column = st.selectbox("Choose the x-axis column", data.columns.tolist())
-        y_column = st.selectbox("Choose the y-axis column", data.columns.tolist())
+        x_column = st.selectbox("Choose the x-axis column", data.columns)
+        y_column = st.selectbox("Choose the y-axis column", data.columns)
         query = st.text_input("Enter a query:")  # Moved inside this block
-    
-
-    
-        # Drop NaNs
-        data.dropna(subset=[x_column, y_column], inplace=True)
-    
+        
         if st.button("Generate Chart"):
             fig, ax = plt.subplots()
             if chart_type == "Line Graph":
@@ -85,12 +80,14 @@ def main():
                 ax.bar(data[x_column], data[y_column])
             elif chart_type == "Scatter Plot":
                 ax.scatter(data[x_column], data[y_column])
-    
             ax.set_xlabel(x_column)
             ax.set_ylabel(y_column)
+            for label in ax.get_xticklabels():
+                label.set_rotation(45)
+                label.set_horizontalalignment('right')
+            ax.tick_params(axis='x', labelsize=8)
+            ax.tick_params(axis='y', labelsize=8)
             st.pyplot(fig)
-        
-
         
         
         llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])        
