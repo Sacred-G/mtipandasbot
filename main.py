@@ -29,7 +29,15 @@ def main():
             st.markdown("NOTE: Anything above 0.7 may produce hallucinations")
             st.divider()
             st.markdown("You will need a OpenAI api key to upload and chat. You can obtain it from https://platform.openai.com/account/api-keys")
-    
+            st.divider()
+            st.markdown("To set API key As Environment Variable on aM#MAC Open Terminal and type export OPENAI_API_KEY="your-api-key-here")
+            st.markdown("To set up Environment Variable on Windows")
+            St.text("###Search for Environment Variables: 
+                    1.Open the Start Menu and search for "Environment Variables," or navigate to System Properties → Advanced → Environment Variables.
+                    2.Edit Environment Variables: Under the "System variables" section, click the "New" button.
+                    3.Enter Details:In the "Variable name" field, enter OPENAI_API_KEY.
+                    4.In the "Variable value" field, enter your actual OpenAI API key.
+                    5.Confirm and Apply: Click "OK" to close all of the windows.)    
     # Upload File
     file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
     
