@@ -42,10 +42,12 @@ def main():
     # Upload File
     file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
     
+          
     data = None
+    
     if file:
-
-        st.write(data.columns.tolist())    # Define chat history session state variable        file_type = file.type
+        file_type = file.type
+        
         try:
             if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
                 data = pd.read_excel(file)
@@ -54,31 +56,39 @@ def main():
             else:
                 st.error("Unsupported file type")
                 return
-                st.write("Data Preview:")
-                dataframe(data.head())
+    
+            # Show a data preview and available columns after reading the file
+            st.write("Data Preview:")
+            st.write(data.head())
+            st.write("Available Columns:")
+            st.write(data.columns.tolist())
+    
         except Exception as e:
             st.error(f"An error occurred: {e}")
+            return  # Exit if an error occurs
+    
     else:
         st.warning("No file uploaded yet.")
-
     
-    if 'data' in locals() and data is not None:
+    if data is not None:
+        # UI elements related to chart and data operations
         chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
         x_column = st.selectbox("Choose the x-axis column", data.columns)
         y_column = st.selectbox("Choose the y-axis column", data.columns)
         query = st.text_input("Enter a query:")  # Moved inside this block
-        data.dropna(subset=['your_column'], inplace=True) 
-        data['your_column'] = data['your_column'].astype(float) 
-
-    
+    # Data manipulations
     if 'your_column' in data.columns:
-        data.dropna(subset=['your_column'], inplace=True)
-        try:
-            data.dropna(subset=['your_column'], inplace=True)
-        except KeyError:
+        data.dropna(subset=['your_column'], inplace=True) 
+        data['your_column'] = data['your_column'].astype(float)
+    else:
+        st.error(f"The column 'your_column' does not exist. Available columns are: {data.columns.tolist()}")
+    
+       if 'your_column' in data.columns:
+            data.dropna(subset=['your_column'], inplace=True) 
+            data['your_column'] = data['your_column'].astype(float)
+        else:
             st.error(f"The column 'your_column' does not exist. Available columns are: {data.columns.tolist()}")
-
-
+    
 
         
         if st.button("Generate Chart"):
