@@ -87,22 +87,25 @@ def main():
         llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
         agent = create_pandas_dataframe_agent(llm, data, verbose=True)
         
-        if st.button("Execute") and query:
-    with st.spinner('Generating response...'):
-        try:
-            prompt = f'''
-                Consider the uploaded pandas data, respond intelligently to user input
-                \\nCHAT HISTORY: {st.session_state.chat_history}
-                \\nUSER INPUT: {query}
-                \\nAI RESPONSE HERE:
-            '''
-            answer = agent.run(prompt)
-            st.session_state.chat_history.append(f"USER: {query}")
-            st.session_state.chat_history.append(f"AI: {answer}")
-            for i, message in enumerate(reversed(st.session_state.chat_history)):
-                if i % 2 == 0:
-                    st.markdown(bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
-                else:
-                    st.markdown(user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
+    if st.button("Execute") and query:
+        with st.spinner('Generating response...'):
+            try:
+                prompt = f'''
+                    Consider the uploaded pandas data, respond intelligently to user input
+                    \\nCHAT HISTORY: {st.session_state.chat_history}
+                    \\nUSER INPUT: {query}
+                    \\nAI RESPONSE HERE:
+                    '''
+                answer = agent.run(prompt)
+                st.session_state.chat_history.append(f"USER: {query}")
+                st.session_state.chat_history.append(f"AI: {answer}")
+                for i, message in enumerate(reversed(st.session_state.chat_history)):
+                    if i % 2 == 0:
+                        st.markdown(bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                    else:
+                        st.markdown(user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
+if __name__ == "__main__":
+    load_dotenv()
+    main()
