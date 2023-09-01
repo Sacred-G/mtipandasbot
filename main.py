@@ -39,20 +39,34 @@ def main():
     file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
 
 # Check if a file is uploaded
-    if file:
-        file_type = file.type
-    
-        try:
-            if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-                data = pd.read_excel(file)
-            elif file_type == "text/csv":
-                data = pd.read_csv(file)
-            else:
-                st.error("Unsupported file")
+    # Check if a file is uploaded
 
-       #Display Data Head
-                st.write("Data Preview:")
-                st.dataframe(data.head(50)) 
+    # Check if a file is uploaded
+if file: 
+    file_type = file.type
+
+    try: 
+        if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 
+            data = pd.read_excel(file) 
+        elif file_type == "text/csv": 
+            data = pd.read_csv(file) 
+        else: 
+            st.error("Unsupported file type")
+            return
+
+        # Display Data Head (Note: This is within the try block now)
+        st.write("Data Preview:") 
+        st.dataframe(data.head(50))
+
+    except Exception as e: 
+        st.error(f"An error occurred: {e}")
+else: 
+    st.warning("No file uploaded yet.")
+
+# The rest of your code that uses 'data' should only be executed if 'data' is not None
+if 'data' in locals() and data is not None:
+    # The rest of your code here...
+
     
     
     chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
@@ -69,11 +83,32 @@ def main():
                 ax.bar(data[x_column], data[y_column])
             elif chart_type == "Scatter Plot":
                 ax.scatter(data[x_column], data[y_column])
+# Check if a file is uploaded
+if file: 
+    file_type = file.type
 
-            ax.set_xlabel(x_column)
-            ax.set_ylabel(y_column)
+    try: 
+        if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 
+            data = pd.read_excel(file) 
+        elif file_type == "text/csv": 
+            data = pd.read_csv(file) 
+        else: 
+            st.error("Unsupported file type")
+            return
 
-            # Sparse Labeling for x-axis
+        # Display Data Head (Note: This is within the try block now)
+        st.write("Data Preview:") 
+        st.dataframe(data.head(50))
+
+    except Exception as e: 
+        st.error(f"An error occurred: {e}")
+else: 
+    st.warning("No file uploaded yet.")
+
+# The rest of your code that uses 'data' should only be executed if 'data' is not None
+if 'data' in locals() and data is not None:
+    # The rest of your code here...
+
             data[x_column] = data[x_column].astype(str)
             abbrev_x_labels = [str(label)[:4] + '...' if len(str(label)) > 4 else str(label) for label in data[x_column]]
             n_x = 5 # Show every nth label for x-axis (adjust as needed)
