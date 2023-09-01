@@ -138,4 +138,4 @@ def main():
 
 if __name__ == "__main__":
     load_dotenv() # Import enviornmental variables
-        main()   
+    main()   
