@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from dotenv import load_dotenv
+import os
 from langchain.agents import create_pandas_dataframe_agent
 from langchain.chat_models import ChatOpenAI
 from langchain.llms import OpenAI
@@ -17,7 +18,7 @@ def main():
     
     # Apply CSS
     st.write(css, unsafe_allow_html=True)
-    
+    st.secrets["openai_api_key"] = os.environ.get("OPENAI_API_KEY")
     # Define chat history session state variable
     st.session_state.setdefault('chat_history', [])
     
@@ -53,8 +54,8 @@ def main():
             else:
                 st.error("Unsupported file type")
                 return
-            st.write("Data Preview:")
-            dataframe(data.head())
+                st.write("Data Preview:")
+                dataframe(data.head())
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
@@ -87,25 +88,21 @@ def main():
         agent = create_pandas_dataframe_agent(llm, data, verbose=True)
         
         if st.button("Execute") and query:
-            with st.spinner('Generating response...'):
-                try:
-                    prompt = f'''
-                        Consider the uploaded pandas data, respond intelligently to user input
-                        \\nCHAT HISTORY: {st.session_state.chat_history}
-                        \\nUSER INPUT: {query}
-                        \\nAI RESPONSE HERE:
-                    '''
-                    answer = agent.run(prompt)
-                    st.session_state.chat_history.append(f"USER: {query}")
-                    st.session_state.chat_history.append(f"AI: {answer}")
-                    for i, message in enumerate(reversed(st.session_state.chat_history)):
-                        if i % 2 == 0:
-                            (bot_template.replace("{{MSG}}", message), unsafe_allow_html==True)
-                        else:
-                            (user_template.replace("{{MSG}}", message), unsafe_allow_html==True)
-                except Exception as e:
-                    st.error(f"An error occurred: {str(e)}")
-
-if __name__ == "__main__":
-    load_dotenv()
-    main()
+    with st.spinner('Generating response...'):
+        try:
+            prompt = f'''
+                Consider the uploaded pandas data, respond intelligently to user input
+                \\nCHAT HISTORY: {st.session_state.chat_history}
+                \\nUSER INPUT: {query}
+                \\nAI RESPONSE HERE:
+            '''
+            answer = agent.run(prompt)
+            st.session_state.chat_history.append(f"USER: {query}")
+            st.session_state.chat_history.append(f"AI: {answer}")
+            for i, message in enumerate(reversed(st.session_state.chat_history)):
+                if i % 2 == 0:
+                    st.markdown(bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                else:
+                    st.markdown(user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
