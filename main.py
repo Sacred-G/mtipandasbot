@@ -77,15 +77,15 @@ def main():
         fig, ax = plt.subplots()
     
     # Plot based on chart type
-    if chart_type == "Line Graph":
-        ax.plot(data[x_column], data[y_column])
-    elif chart_type == "Bar Chart":
-        ax.bar(data[x_column], data[y_column])
-    elif chart_type == "Scatter Plot":
-        ax.scatter(data[x_column], data[y_column])
+        if chart_type == "Line Graph":
+            ax.plot(data[x_column], data[y_column])
+        elif chart_type == "Bar Chart":
+            ax.bar(data[x_column], data[y_column])
+        elif chart_type == "Scatter Plot":
+            ax.scatter(data[x_column], data[y_column])
 
-        ax.set_xlabel(x_column)
-        ax.set_ylabel(y_column)
+            ax.set_xlabel(x_column)
+            ax.set_ylabel(y_column)
 
     # Rotate x and y labels for better visibility
     for label in ax.get_xticklabels():
