@@ -6,3 +6,4 @@ pandas
 seaborn
 matplotlib
 python_dotenv
+tabulate
