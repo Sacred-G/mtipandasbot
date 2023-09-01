@@ -82,7 +82,7 @@ def main():
     
         # Drop NaNs
         data.dropna(subset=[x_column, y_column], inplace=True)
-
+    
         if st.button("Generate Chart"):
             fig, ax = plt.subplots()
             if chart_type == "Line Graph":
@@ -92,8 +92,8 @@ def main():
             elif chart_type == "Scatter Plot":
                 ax.scatter(data[x_column], data[y_column])
     
-                ax.set_xlabel(x_column)
-                ax.set_ylabel(y_column)
+            ax.set_xlabel(x_column)
+            ax.set_ylabel(y_column)
             st.pyplot(fig)
         
 
