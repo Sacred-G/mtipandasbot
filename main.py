@@ -48,23 +48,11 @@ def main():
             elif file_type == "text/csv":
                 data = pd.read_csv(file)
             else:
-                st.error("Unsupported file type")
-                return
+                st.error("Unsupported file)
 
-            st.dataframe(data.head(50))
-        
-        except Exception as e:
-            st.error(f"An error occurred: {e}")
-
-    else:
-        st.warning("No file uploaded yet.")
-    
-
-    if data is not None:
-
-    # Display Data Head
-        st.write("Data Preview:")
-        st.dataframe(data.head(50)) 
+       #Display Data Head
+                st.write("Data Preview:")
+                st.dataframe(data.head(50)) 
     
     
     chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
