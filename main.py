@@ -18,7 +18,7 @@ def main():
     
     # Apply CSS
     st.write(css, unsafe_allow_html=True)
-    st.secrets["openai_api_key"] = os.environ.get("OPENAI_API_KEY")
+   
     # Define chat history session state variable
     st.session_state.setdefault('chat_history', [])
     
@@ -83,8 +83,7 @@ def main():
             ax.tick_params(axis='x', labelsize=8)
             ax.tick_params(axis='y', labelsize=8)
             st.pyplot(fig)
-        
-        llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
+        llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])        
         agent = create_pandas_dataframe_agent(llm, data, verbose=True)
         
     if st.button("Execute") and query:
