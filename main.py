@@ -56,8 +56,8 @@ def main():
     except Exception as e:
         st.error(f"An error occurred: {e}")
 
-else:
-    st.warning("No file uploaded yet.")
+    else:
+        st.warning("No file uploaded yet.")
     
 
   
