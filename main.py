@@ -42,29 +42,29 @@ def main():
     # Check if a file is uploaded
 
     # Check if a file is uploaded
-if file: 
-    file_type = file.type
+    if file: 
+        file_type = file.type
 
-    try: 
-        if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 
-            data = pd.read_excel(file) 
-        elif file_type == "text/csv": 
-            data = pd.read_csv(file) 
-        else: 
-            st.error("Unsupported file type")
-            return
+        try: 
+            if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 
+                data = pd.read_excel(file) 
+            elif file_type == "text/csv": 
+                data = pd.read_csv(file) 
+            else: 
+                st.error("Unsupported file type")
+                return
 
         # Display Data Head (Note: This is within the try block now)
-        st.write("Data Preview:") 
-        st.dataframe(data.head(50))
+            st.write("Data Preview:") 
+            st.dataframe(data.head(50))
 
-    except Exception as e: 
-        st.error(f"An error occurred: {e}")
-else: 
-    st.warning("No file uploaded yet.")
+        except Exception as e: 
+            st.error(f"An error occurred: {e}")
+    else: 
+        st.warning("No file uploaded yet.")
 
 # The rest of your code that uses 'data' should only be executed if 'data' is not None
-if 'data' in locals() and data is not None:
+    if 'data' in locals() and data is not None:
     # The rest of your code here...
 
     
