@@ -102,7 +102,7 @@ def main():
                 st.pyplot(fig)
 
     # Define large language model (LLM)
-    llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
+     llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
 
 
     # Define pandas df agent
