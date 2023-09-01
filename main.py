@@ -137,32 +137,32 @@ agent = create_pandas_dataframe_agent(llm, data, verbose=True)
 query = st.text_input("Enter a query:") 
 
     # Execute Button Logic
-    if st.button("Execute") and query:
-        with st.spinner('Generating response...'):
-            try:
+if st.button("Execute") and query:
+    with st.spinner('Generating response...'):
+        try:
                 # Define prompt for agent
-                prompt = f'''
-                    Consider the uploaded pandas data, respond intelligently to user input
-                    \nCHAT HISTORY: {st.session_state.chat_history}
-                    \nUSER INPUT: {query}
-                    \nAI RESPONSE HERE:
-                '''
+            prompt = f'''
+                Consider the uploaded pandas data, respond intelligently to user input
+                \nCHAT HISTORY: {st.session_state.chat_history}
+                \nUSER INPUT: {query}
+                \nAI RESPONSE HERE:
+            '''
 
                 # Get answer from agent
-                answer = agent.run(prompt)
+            answer = agent.run(prompt)
 
                 # Store conversation
-                st.session_state.chat_history.append(f"USER: {query}")
-                st.session_state.chat_history.append(f"AI: {answer}")
+            st.session_state.chat_history.append(f"USER: {query}")
+            st.session_state.chat_history.append(f"AI: {answer}")
 
                 # Display conversation in reverse order
-                for i, message in enumerate(reversed(st.session_state.chat_history)):
-                    if i % 2 == 0: st.markdown(bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
-                    else: st.markdown(user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+            for i, message in enumerate(reversed(st.session_state.chat_history)):
+                if i % 2 == 0: st.markdown(bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                else: st.markdown(user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
 
             # Error Handling
-            except Exception as e:
-                st.error(f"An error occurred: {str(e)}")
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
 
 if __name__ == "__main__":
     load_dotenv() # Import enviornmental variables
