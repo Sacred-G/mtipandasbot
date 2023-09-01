@@ -45,27 +45,23 @@ def main():
           
     data = None
     
+       data = None
     if file:
         file_type = file.type
-        
         try:
-            if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+            if file_type.endswith('spreadsheetml.sheet'):
                 data = pd.read_excel(file)
-            elif file_type == "text/csv":
+            elif file_type.endswith('csv'):
                 data = pd.read_csv(file)
             else:
                 st.error("Unsupported file type")
                 return
-    
-            # Show a data preview and available columns after reading the file
             st.write("Data Preview:")
             st.write(data.head())
-            st.write("Available Columns:")
             st.write(data.columns.tolist())
-    
         except Exception as e:
             st.error(f"An error occurred: {e}")
-            return  # Exit if an error occurs
+            return
     
     else:
         st.warning("No file uploaded yet.")
