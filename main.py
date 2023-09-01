@@ -17,7 +17,7 @@ def main():
     st.subheader("MTI Pandas Agent")
     st.write("Upload a CSV or XLSX file and query answers from your data.")
      
-    st.write(os.environ["openai_api_key"] == st.secrets["openai_api_key"]
+    st.write(os.environ["openai_api_key"] == st.secrets["openai_api_key"])
 
 
     # Apply CSS
