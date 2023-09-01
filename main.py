@@ -106,7 +106,7 @@ def main():
 
 
     # Define pandas df agent
-      agent = create_pandas_dataframe_agent(llm, data, verbose=True) 
+     agent = create_pandas_dataframe_agent(llm, data, verbose=True) 
 
     # Accept input from user
     query = st.text_input("Enter a query:") 
