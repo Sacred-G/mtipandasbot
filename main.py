@@ -40,7 +40,7 @@ def main():
 
 # Check if a file is uploaded
     if file:
-    file_type = file.type
+        file_type = file.type
     
     try:
         if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
