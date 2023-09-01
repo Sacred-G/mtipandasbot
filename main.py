@@ -69,100 +69,75 @@ def main():
 
     
     
-    chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
-    x_column = st.selectbox("Choose the x-axis column", data.columns)
-    y_column = st.selectbox("Choose the y-axis column", data.columns)
+        chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
+        x_column = st.selectbox("Choose the x-axis column", data.columns)
+        y_column = st.selectbox("Choose the y-axis column", data.columns)
 
-    if st.button("Generate Chart"):
-            fig, ax = plt.subplots()
-            data[x_column] = data[x_column].astype(str)
-            data[y_column] = data[y_column].astype(str)
-            if chart_type == "Line Graph":
-                ax.plot(data[x_column], data[y_column])
-            elif chart_type == "Bar Chart":
-                ax.bar(data[x_column], data[y_column])
-            elif chart_type == "Scatter Plot":
-                ax.scatter(data[x_column], data[y_column])
-# Check if a file is uploaded
-if file: 
-    file_type = file.type
+        if st.button("Generate Chart"):
+                fig, ax = plt.subplots()
+                data[x_column] = data[x_column].astype(str)
+                data[y_column] = data[y_column].astype(str)
+                if chart_type == "Line Graph":
+                    ax.plot(data[x_column], data[y_column])
+                elif chart_type == "Bar Chart":
+                    ax.bar(data[x_column], data[y_column])
+                elif chart_type == "Scatter Plot":
+                    ax.scatter(data[x_column], data[y_column]
 
-    try: 
-        if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 
-            data = pd.read_excel(file) 
-        elif file_type == "text/csv": 
-            data = pd.read_csv(file) 
-        else: 
-            st.error("Unsupported file type")
-            return
-
-        # Display Data Head (Note: This is within the try block now)
-        st.write("Data Preview:") 
-        st.dataframe(data.head(50))
-
-    except Exception as e: 
-        st.error(f"An error occurred: {e}")
-else: 
-    st.warning("No file uploaded yet.")
-
-# The rest of your code that uses 'data' should only be executed if 'data' is not None
-if 'data' in locals() and data is not None:
-    # The rest of your code here...
-
-            data[x_column] = data[x_column].astype(str)
-            abbrev_x_labels = [str(label)[:4] + '...' if len(str(label)) > 4 else str(label) for label in data[x_column]]
-            n_x = 5 # Show every nth label for x-axis (adjust as needed)
-            sparse_x_labels = [label if i % n_x == 0 else '' for i, label in enumerate(abbrev_x_labels)]
-            ax.set_xticks(range(len(sparse_x_labels)))
-            ax.set_xticklabels(sparse_x_labels, rotation=45)
+                data[x_column] = data[x_column].astype(str)
+                abbrev_x_labels = [str(label)[:4] + '...' if len(str(label)) > 4 else str(label) for label in data[x_column]]
+                n_x = 5 # Show every nth label for x-axis (adjust as needed)
+                sparse_x_labels = [label if i % n_x == 0 else '' for i, label in enumerate(abbrev_x_labels)]
+                ax.set_xticks(range(len(sparse_x_labels)))
+                ax.set_xticklabels(sparse_x_labels, rotation=45)
 
             # Sparse Labeling for y-axis
-            data[y_column] = data[y_column].astype(str)
-            abbrev_y_labels = [str(label)[:4] + '...' if len(str(label)) > 4 else str(label) for label in data[y_column]]   
-            n_y = 5  # Show every nth label for y-axis (adjust as needed)
-            sparse_y_labels = [label if i % n_y == 0 else '' for i, label in enumerate(abbrev_y_labels)]
-            ax.set_yticks(range(len(sparse_y_labels)))
-            ax.set_yticklabels(sparse_y_labels)
+                data[y_column] = data[y_column].astype(str)
+                abbrev_y_labels = [str(label)[:4] + '...' if len(str(label)) > 4 else str(label) for label in data[y_column]]   
+                n_y = 5  # Show every nth label for y-axis (adjust as needed)
+                sparse_y_labels = [label if i % n_y == 0 else '' for i, label in enumerate(abbrev_y_labels)]
+                ax.set_yticks(range(len(sparse_y_labels)))
+                ax.set_yticklabels(sparse_y_labels)
 
-            st.pyplot(fig)
+                st.pyplot(fig)
 
     # Define large language model (LLM)
-llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
+    llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
 
 
     # Define pandas df agent
-agent = create_pandas_dataframe_agent(llm, data, verbose=True) 
+    agent = create_pandas_dataframe_agent(llm, data, verbose=True) 
 
     # Accept input from user
-query = st.text_input("Enter a query:") 
+    query = st.text_input("Enter a query:") 
 
     # Execute Button Logic
-if st.button("Execute") and query:
-    with st.spinner('Generating response...'):
-        try:
+    if st.button("Execute") and query:
+        with st.spinner('Generating response...'):
+            try:
                 # Define prompt for agent
-            prompt = f'''
-                Consider the uploaded pandas data, respond intelligently to user input
-                \nCHAT HISTORY: {st.session_state.chat_history}
-                \nUSER INPUT: {query}
-                \nAI RESPONSE HERE:
-            '''
+                prompt = f'''
+                    Consider the uploaded pandas data, respond intelligently to user input
+                    \nCHAT HISTORY: {st.session_state.chat_history}
+                    \nUSER INPUT: {query}
+                    \nAI RESPONSE HERE:
+                '''
 
                 # Get answer from agent
-            answer = agent.run(prompt)
+                answer = agent.run(prompt)
 
                 # Store conversation
-            st.session_state.chat_history.append(f"USER: {query}")
-            st.session_state.chat_history.append(f"AI: {answer}")
+                st.session_state.chat_history.append(f"USER: {query}")
+                st.session_state.chat_history.append(f"AI: {answer}")
 
                 # Display conversation in reverse order
-            for i, message in enumerate(reversed(st.session_state.chat_history)):
-                if i % 2 == 0: st.markdown(bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
-                else: st.markdown(user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                for i, message in enumerate(reversed(st.session_state.chat_history)):
+                    if i % 2 == 0: st.markdown(bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                    else: st.markdown(user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
 
             # Error Handling
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
 
 if __name__ == "__main__":
     load_dotenv() # Import enviornmental variables
