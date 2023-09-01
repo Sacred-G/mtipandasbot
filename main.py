@@ -32,7 +32,7 @@ def main():
             st.divider()
             st.markdown("To set API key As Environment Variable on a MAC Open Terminal and type export OPENAI_API_KEY = 'your_api_key'")
             st.markdown("**To set up Environment Variable on Windows**")
-            st.markdown("1.Open the Start Menu and search for "Environment Variables" or navigate to System Properties → Advanced → Environment Variables
+            st.markdown("1.Open the Start Menu and search for **Environment Variables**
                          2. **Edit Environment Variables**
                              - Under the "System variables" section, click the "New" button.
                          3. **Enter Details**: 
