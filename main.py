@@ -32,12 +32,12 @@ def main():
             st.divider()
             st.text("To set API key As Environment Variable on a MAC Open Terminal and type export OPENAI_API_KEY = 'your_api_key'")
             st.text("To set up Environment Variable on Windows")
-            St.text("###Search for Environment Variables: 
-                    1.Open the Start Menu and search for "Environment Variables," or navigate to System Properties → Advanced → Environment Variables.
+            st.text("Search for Environment Variables")
+            st.text(" 1.Open the Start Menu and search for "Environment Variables," or navigate to System Properties → Advanced → Environment Variables.
                     2.Edit Environment Variables: Under the "System variables" section, click the "New" button.
                     3.Enter Details:In the "Variable name" field, enter OPENAI_API_KEY.
                     4.In the "Variable value" field, enter your actual OpenAI API key.
-                    5.Confirm and Apply: Click "OK" to close all of the windows.)    
+                    5.Confirm and Apply: Click "OK" to close all of the windows.")    
     # Upload File
     file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
     
