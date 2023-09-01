@@ -79,10 +79,10 @@ def main():
     # Data manipulations
  
     
-           if 'your_column' in data.columns:
+           if  'your_column' in data.columns:
                 data.dropna(subset=['your_column'], inplace=True) 
                 data['your_column'] = data['your_column'].astype(float)
-            else:
+           else:
                 st.error(f"The column 'your_column' does not exist. Available columns are: {data.columns.tolist()}")
         
 
