@@ -94,7 +94,7 @@ def main():
     
                 ax.set_xlabel(x_column)
                 ax.set_ylabel(y_column)
-                st.pyplot(fig)
+            st.pyplot(fig)
         
 
         
