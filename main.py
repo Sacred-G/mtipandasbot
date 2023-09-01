@@ -33,7 +33,7 @@ def main():
             st.markdown("To set API key As Environment Variable on a MAC Open Terminal and type export OPENAI_API_KEY = 'your_api_key'")
             st.markdown("To set up Environment Variable on Windows")
             st.markdown("Search for Environment Variables")
-            st.markdown("1.Open the Start Menu and search for "Environment Variables or navigate to System Properties → Advanced → Environment Variables
+            st.markdown("1.Open the Start Menu and search for "Environment Variables or navigate to System Properties then Advanced then Environment Variables
                     2.Edit Environment Variables: Under the "System variables" section click the "New" button
                     3.Enter Details: In the "Variable name" field enter OPENAI_API_KEY
                     4.In the "Variable value" field enter your actual OpenAI API key
