@@ -77,11 +77,7 @@ def main():
         y_column = st.selectbox("Choose the y-axis column", data.columns)
         query = st.text_input("Enter a query:")  # Moved inside this block
     # Data manipulations
-    if 'your_column' in data.columns:
-        data.dropna(subset=['your_column'], inplace=True) 
-        data['your_column'] = data['your_column'].astype(float)
-    else:
-        st.error(f"The column 'your_column' does not exist. Available columns are: {data.columns.tolist()}")
+ 
     
        if 'your_column' in data.columns:
             data.dropna(subset=['your_column'], inplace=True) 
