@@ -30,7 +30,7 @@ def main():
             st.divider()
             st.markdown("You will need a OpenAI api key to upload and chat. You can obtain it from https://platform.openai.com/account/api-keys")
             st.divider()
-            st.text("To set API key As Environment Variable on a MAC Open Terminal and type export OPENAI_API_KEY="your-api-key-here")
+            st.text("To set API key As Environment Variable on a MAC Open Terminal and type export OPENAI_API_KEY = 'your_api_key'")
             st.text("To set up Environment Variable on Windows")
             St.text("###Search for Environment Variables: 
                     1.Open the Start Menu and search for "Environment Variables," or navigate to System Properties → Advanced → Environment Variables.
