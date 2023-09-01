@@ -52,7 +52,7 @@ if file:
             data = pd.read_csv(file) 
         else: 
             st.error("Unsupported file type")
-            
+            return
 
         # Display Data Head (Note: This is within the try block now)
         st.write("Data Preview:") 
