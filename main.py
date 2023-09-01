@@ -127,14 +127,14 @@ if 'data' in locals() and data is not None:
             st.pyplot(fig)
 
     # Define large language model (LLM)
-    llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
+        llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
 
 
     # Define pandas df agent
-    agent = create_pandas_dataframe_agent(llm, data, verbose=True) 
+        agent = create_pandas_dataframe_agent(llm, data, verbose=True) 
 
     # Accept input from user
-    query = st.text_input("Enter a query:") 
+        query = st.text_input("Enter a query:") 
 
     # Execute Button Logic
     if st.button("Execute") and query:
