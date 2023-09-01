@@ -9,13 +9,16 @@ from langchain.llms import OpenAI
 from langchain.agents.agent_types import AgentType
 from html_templates import css, user_template, bot_template
 
-openai_api_key = "st.secrets.toml"
+
 def main():
     st.set_page_config(page_title="MTI Pandas Agent")
     logo_url = "https://i.imgur.com/9DLn81j.png"
     st.image(logo_url, width=400)
     st.subheader("MTI Pandas Agent")
     st.write("Upload a CSV or XLSX file and query answers from your data.")
+     
+    st.write(os.environ["openai_api_key"] == st.secrets["openai_api_key"]
+
 
     # Apply CSS
     st.write(css, unsafe_allow_html=True)
