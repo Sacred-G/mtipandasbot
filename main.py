@@ -42,25 +42,25 @@ def main():
     if file:
         file_type = file.type
     
-    try:
-        if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-            data = pd.read_excel(file)
-        elif file_type == "text/csv":
-            data = pd.read_csv(file)
-        else:
-            st.error("Unsupported file type")
-            return
+        try:
+            if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+                data = pd.read_excel(file)
+            elif file_type == "text/csv":
+                data = pd.read_csv(file)
+            else:
+                st.error("Unsupported file type")
+                return
 
-        st.dataframe(data.head(50))
+            st.dataframe(data.head(50))
         
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
+         except Exception as e:
+            st.error(f"An error occurred: {e}")
 
     else:
         st.warning("No file uploaded yet.")
     
 
-  
+   if data is not None:
 
     # Display Data Head
     st.write("Data Preview:")
