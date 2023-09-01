@@ -54,7 +54,7 @@ def main():
                 st.error("Unsupported file type")
                 return
             st.write("Data Preview:")
-            ataframe(data.head(50))
+            dataframe(data.head())
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
