@@ -82,7 +82,7 @@ def main():
                 elif chart_type == "Bar Chart":
                     ax.bar(data[x_column], data[y_column])
                 elif chart_type == "Scatter Plot":
-                    ax.scatter(data[x_column], data[y_column]
+                    ax.scatter(data[x_column], data[y_column])
 
                 data[x_column] = data[x_column].astype(str)
                 abbrev_x_labels = [str(label)[:4] + '...' if len(str(label)) > 4 else str(label) for label in data[x_column]]
