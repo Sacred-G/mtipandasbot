@@ -40,7 +40,7 @@ def main():
                          4. **Enter Variable Value**: 
                              - In the Variable value field, enter your actual OpenAI API key.
                          5. **Confirm and Apply**: 
-                             - Click OK to close all of the windows.)            
+                             - Click OK to close all of the windows.")            
     # Upload File
     file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
     
