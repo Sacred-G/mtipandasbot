@@ -60,12 +60,15 @@ def main():
             st.error(f"An error occurred: {e}")
     else:
         st.warning("No file uploaded yet.")
+    data['your_column'] = data['your_column'].astype(float)
     
     if 'data' in locals() and data is not None:
         chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
         x_column = st.selectbox("Choose the x-axis column", data.columns)
         y_column = st.selectbox("Choose the y-axis column", data.columns)
         query = st.text_input("Enter a query:")  # Moved inside this block
+        data.dropna(subset=['your_column'], inplace=True) 
+        data['your_column'] = data['your_column'].astype(float)       
         
         if st.button("Generate Chart"):
             fig, ax = plt.subplots()
