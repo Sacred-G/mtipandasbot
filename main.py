@@ -73,7 +73,7 @@ def main():
     if 'your_column' in data.columns:
         data.dropna(subset=['your_column'], inplace=True)
         try:
-    data.dropna(subset=['your_column'], inplace=True)
+            data.dropna(subset=['your_column'], inplace=True)
 except KeyError:
     st.error(f"The column 'your_column' does not exist. Available columns are: {data.columns.tolist()}")
 
