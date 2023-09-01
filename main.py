@@ -100,9 +100,9 @@ def main():
                     st.session_state.chat_history.append(f"AI: {answer}")
                     for i, message in enumerate(reversed(st.session_state.chat_history)):
                         if i % 2 == 0:
-                            (bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                            (bot_template.replace("{{MSG}}", message), unsafe_allow_html==True)
                         else:
-                            (user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                            (user_template.replace("{{MSG}}", message), unsafe_allow_html==True)
                 except Exception as e:
                     st.error(f"An error occurred: {str(e)}")
 
