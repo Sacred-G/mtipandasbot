@@ -32,15 +32,15 @@ def main():
             st.divider()
             st.markdown("To set API key As Environment Variable on a MAC Open Terminal and type export OPENAI_API_KEY = 'your_api_key'")
             st.markdown("**To set up Environment Variable on Windows**")
-            st.markdown( "1. Open the Start Menu and search for **Environment Variables**"
-                         2. **Edit Environment Variables**
-                             - Under the System variables section, click the New button.
-                         3. **Enter Details**: 
-                             - In the Variable name field, enter OPENAI_API_KEY.
-                         4. **Enter Variable Value**: 
-                             - In the Variable value field, enter your actual OpenAI API key.
-                         5. **Confirm and Apply**: 
-                             - Click OK to close all of the windows.)            
+            st.markdown( 1, "Open the Start Menu and search for **Environment Variables**")
+            st.markdown( 2, "**Edit Environment Variables**")
+            st.markdown(    "- Under the System variables section, click the New button")
+            st.markdown( 3, "**Enter Details**:") 
+            st.markdown(    "- In the Variable name field, enter OPENAI_API_KEY")
+            st.markdown( 4, "**Enter Variable Value**:") 
+            st.markdown(    "- In the Variable value field, enter your actual OpenAI API key")
+            st.markdown( 5, "**Confirm and Apply**:") 
+            st.markdown(    "- Click OK to close all of the windows")          
     # Upload File
     file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
     
