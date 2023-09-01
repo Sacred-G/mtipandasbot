@@ -43,10 +43,10 @@ def main():
         file_type = file.type  # Get the MIME type of the uploaded file
     
     # Now you can use `file_type` in your conditions
-    if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-        data = pd.read_excel(file)
-    elif file_type == "text/csv":
-        data = pd.read_csv(file)
+        if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+            data = pd.read_excel(file)
+        elif file_type == "text/csv":
+            data = pd.read_csv(file)
     else:
         st.error("Unsupported file type")
 
