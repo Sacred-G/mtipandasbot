@@ -45,7 +45,7 @@ def main():
           
     data = None
     
-       data = None
+       
     if file:
         file_type = file.type
         try:
