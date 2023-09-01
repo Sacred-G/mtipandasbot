@@ -30,10 +30,10 @@ def main():
             st.divider()
             st.markdown("You will need a OpenAI api key to upload and chat. You can obtain it from https://platform.openai.com/account/api-keys")
             st.divider()
-            st.text("To set API key As Environment Variable on a MAC Open Terminal and type export OPENAI_API_KEY = 'your_api_key'")
-            st.text("To set up Environment Variable on Windows")
-            st.text("Search for Environment Variables")
-            st.text("1.Open the Start Menu and search for "Environment Variables or navigate to System Properties → Advanced → Environment Variables
+            st.markdown("To set API key As Environment Variable on a MAC Open Terminal and type export OPENAI_API_KEY = 'your_api_key'")
+            st.markdown("To set up Environment Variable on Windows")
+            st.markdown("Search for Environment Variables")
+            st.markdown("1.Open the Start Menu and search for "Environment Variables or navigate to System Properties → Advanced → Environment Variables
                     2.Edit Environment Variables: Under the "System variables" section click the "New" button
                     3.Enter Details: In the "Variable name" field enter OPENAI_API_KEY
                     4.In the "Variable value" field enter your actual OpenAI API key
