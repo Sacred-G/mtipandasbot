@@ -7,3 +7,4 @@ seaborn
 matplotlib
 python_dotenv
 tabulate
+openpyxl
