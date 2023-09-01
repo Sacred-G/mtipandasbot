@@ -18,8 +18,7 @@ def main():
     
     # Apply CSS
     st.write(css, unsafe_allow_html=True)
-   
-    # Define chat history session state variable
+    st.write(data.columns.tolist())    # Define chat history session state variable
     st.session_state.setdefault('chat_history', [])
     
     # Temperature slider
@@ -68,7 +67,18 @@ def main():
         y_column = st.selectbox("Choose the y-axis column", data.columns)
         query = st.text_input("Enter a query:")  # Moved inside this block
         data.dropna(subset=['your_column'], inplace=True) 
-        data['your_column'] = data['your_column'].astype(float)       
+        data['your_column'] = data['your_column'].astype(float) 
+
+    
+    if 'your_column' in data.columns:
+        data.dropna(subset=['your_column'], inplace=True)
+        try:
+    data.dropna(subset=['your_column'], inplace=True)
+except KeyError:
+    st.error(f"The column 'your_column' does not exist. Available columns are: {data.columns.tolist()}")
+
+
+
         
         if st.button("Generate Chart"):
             fig, ax = plt.subplots()
