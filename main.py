@@ -18,7 +18,7 @@ def main():
     
     # Apply CSS
     st.write(css, unsafe_allow_html=True)
-    st.write(data.columns.tolist())    # Define chat history session state variable
+
     st.session_state.setdefault('chat_history', [])
     
     # Temperature slider
@@ -44,7 +44,8 @@ def main():
     
     data = None
     if file:
-        file_type = file.type
+
+        st.write(data.columns.tolist())    # Define chat history session state variable        file_type = file.type
         try:
             if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
                 data = pd.read_excel(file)
