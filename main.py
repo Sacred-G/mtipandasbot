@@ -70,14 +70,25 @@ def main():
     else:
         st.warning("No file uploaded yet.")
     
-    if data is not None:
-        # UI elements related to chart and data operations
+    if 'data' in locals() and data is not None:
+    x_column = st.selectbox("Choose the x-axis column", data.columns)
+    y_column = st.selectbox("Choose the y-axis column", data.columns)
+    
+    if x_column and y_column:
+        # Debugging
+        print(f"{x_column} dtype: {data[x_column].dtype}")
+        print(f"{y_column} dtype: {data[y_column].dtype}")
+
+        # Conversion
         data[x_column] = pd.to_numeric(data[x_column], errors='coerce')
         data[y_column] = pd.to_numeric(data[y_column], errors='coerce')
-        data.dropna(subset=[x_column, y_column], inplace=True)        
-        chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
-        x_column = st.selectbox("Choose the x-axis column", data.columns)
-        y_column = st.selectbox("Choose the y-axis column", data.columns)
+
+        # Drop NaNs
+        data.dropna(subset=[x_column, y_column], inplace=True)
+
+    chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
+
+      
         query = st.text_input("Enter a query:")  # Moved inside this block
    
     # Drop NaNs
