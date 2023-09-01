@@ -40,13 +40,24 @@ def main():
 
 # Check if a file is uploaded
     if file:
-        file_type = file.type  # Get the MIME type of the uploaded file
+    file_type = file.type
     
-    # Now you can use `file_type` in your conditions
+    try:
         if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
             data = pd.read_excel(file)
         elif file_type == "text/csv":
             data = pd.read_csv(file)
+        else:
+            st.error("Unsupported file type")
+            return
+
+        st.dataframe(data.head(50))
+        
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+
+else:
+    st.warning("No file uploaded yet.")
     
 
   
