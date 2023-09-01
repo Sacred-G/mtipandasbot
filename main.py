@@ -72,12 +72,16 @@ def main():
     
     if data is not None:
         # UI elements related to chart and data operations
+        data[x_column] = pd.to_numeric(data[x_column], errors='coerce')
+        data[y_column] = pd.to_numeric(data[y_column], errors='coerce')
+        data.dropna(subset=[x_column, y_column], inplace=True)        
         chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
         x_column = st.selectbox("Choose the x-axis column", data.columns)
         y_column = st.selectbox("Choose the y-axis column", data.columns)
         query = st.text_input("Enter a query:")  # Moved inside this block
-    # Data manipulations
- 
+   
+    # Drop NaNs
+        
     
         if 'your_column' in data.columns:
             data.dropna(subset=['your_column'], inplace=True) 
