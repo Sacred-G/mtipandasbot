@@ -73,8 +73,8 @@ def main():
         x_column = st.selectbox("Choose the x-axis column", data.columns)
         y_column = st.selectbox("Choose the y-axis column", data.columns)
 
-        if st.button("Generate Chart"):
-    fig, ax = plt.subplots()
+    if st.button("Generate Chart"):
+        fig, ax = plt.subplots()
     
     # Plot based on chart type
     if chart_type == "Line Graph":
