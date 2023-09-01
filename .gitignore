@@ -4,3 +4,4 @@
 /api_key.py
 /env
 /secrets.toml
+/.streamlit
