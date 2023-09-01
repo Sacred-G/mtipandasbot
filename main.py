@@ -40,7 +40,8 @@ def main():
     if not file: st.stop()
 
     # Read Data as Pandas
-    data = pd.read_csv(file)
+    data = pd.read_csv(file, encoding='ISO-8859-1')  # or 'latin1', 'utf-16', etc.
+
     
 
     # Display Data Head
