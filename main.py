@@ -1,4 +1,4 @@
-import streamlit as st
+9import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
@@ -60,7 +60,7 @@ def main():
         st.warning("No file uploaded yet.")
     
 
-   if data is not None:
+    if data is not None:
 
     # Display Data Head
     st.write("Data Preview:")
