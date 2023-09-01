@@ -25,22 +25,20 @@ def main():
     with st.sidebar:
         with st.expander("Settings",  expanded=True):
             TEMP = st.slider(label="LLM Temperature", min_value=0.0, max_value=1.0, value=0.5)
-            st.markdown("Adjust the LLM Temperature: A higher value makes the output more random, while a lower value makes it more deterministic.")
-            st.markdown("NOTE: Anything above 0.7 may produce hallucinations")
+            ("Adjust the LLM Temperature: A higher value makes the output more random, while a lower value makes it more deterministic.")
+            ("NOTE: Anything above 0.7 may produce hallucinations")
             st.divider()
             st.markdown("You will need a OpenAI api key to upload and chat. You can obtain it from https://platform.openai.com/account/api-keys")
             st.divider()
             st.markdown("To set API key As Environment Variable on a MAC Open Terminal and type export OPENAI_API_KEY = 'your_api_key'")
             st.markdown("**To set up Environment Variable on Windows**")
-            st.markdown( 1, "Open the Start Menu and search for **Environment Variables**")
-            st.markdown( 2, "**Edit Environment Variables**")
-            st.markdown(    "- Under the System variables section, click the New button")
-            st.markdown( 3, "**Enter Details**:") 
-            st.markdown(    "- In the Variable name field, enter OPENAI_API_KEY")
-            st.markdown( 4, "**Enter Variable Value**:") 
-            st.markdown(    "- In the Variable value field, enter your actual OpenAI API key")
-            st.markdown( 5, "**Confirm and Apply**:") 
-            st.markdown(    "- Click OK to close all of the windows")          
+            st.markdown("""
+                       1. Open the Start Menu and search for **Environment Variables**
+                       2. Under the "System variables" section, click the "New" button.
+                       3. In the "Variable name" field, enter `OPENAI_API_KEY`.
+                       4. In the "Variable value" field, enter your actual OpenAI API key.
+                       5. Click "OK" to close all of the windows.                       
+                       """)             
     # Upload File
     file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
     
@@ -56,7 +54,7 @@ def main():
                 st.error("Unsupported file type")
                 return
             st.write("Data Preview:")
-            st.dataframe(data.head(50))
+            ataframe(data.head(50))
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
@@ -102,9 +100,9 @@ def main():
                     st.session_state.chat_history.append(f"AI: {answer}")
                     for i, message in enumerate(reversed(st.session_state.chat_history)):
                         if i % 2 == 0:
-                            st.markdown(bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                            (bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
                         else:
-                            st.markdown(user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                            (user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
                 except Exception as e:
                     st.error(f"An error occurred: {str(e)}")
 
