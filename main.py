@@ -74,32 +74,29 @@ def main():
         y_column = st.selectbox("Choose the y-axis column", data.columns)
 
         if st.button("Generate Chart"):
-                fig, ax = plt.subplots()
-                data[x_column] = data[x_column].astype(str)
-                data[y_column] = data[y_column].astype(str)
-                if chart_type == "Line Graph":
-                    ax.plot(data[x_column], data[y_column])
-                elif chart_type == "Bar Chart":
-                    ax.bar(data[x_column], data[y_column])
-                elif chart_type == "Scatter Plot":
-                    ax.scatter(data[x_column], data[y_column])
+    fig, ax = plt.subplots()
+    
+    # Plot based on chart type
+    if chart_type == "Line Graph":
+        ax.plot(data[x_column], data[y_column])
+    elif chart_type == "Bar Chart":
+        ax.bar(data[x_column], data[y_column])
+    elif chart_type == "Scatter Plot":
+        ax.scatter(data[x_column], data[y_column])
 
-                data[x_column] = data[x_column].astype(str)
-                abbrev_x_labels = [str(label)[:4] + '...' if len(str(label)) > 4 else str(label) for label in data[x_column]]
-                n_x = 5 # Show every nth label for x-axis (adjust as needed)
-                sparse_x_labels = [label if i % n_x == 0 else '' for i, label in enumerate(abbrev_x_labels)]
-                ax.set_xticks(range(len(sparse_x_labels)))
-                ax.set_xticklabels(sparse_x_labels, rotation=45)
+    ax.set_xlabel(x_column)
+    ax.set_ylabel(y_column)
 
-            # Sparse Labeling for y-axis
-                data[y_column] = data[y_column].astype(str)
-                abbrev_y_labels = [str(label)[:4] + '...' if len(str(label)) > 4 else str(label) for label in data[y_column]]   
-                n_y = 5  # Show every nth label for y-axis (adjust as needed)
-                sparse_y_labels = [label if i % n_y == 0 else '' for i, label in enumerate(abbrev_y_labels)]
-                ax.set_yticks(range(len(sparse_y_labels)))
-                ax.set_yticklabels(sparse_y_labels)
-
-                st.pyplot(fig)
+    # Rotate x and y labels for better visibility
+    for label in ax.get_xticklabels():
+        label.set_rotation(45)
+        label.set_horizontalalignment('right')
+        
+    # Optionally, you can also reduce font size for better fit
+    # ax.tick_params(axis='x', labelsize=8)
+    # ax.tick_params(axis='y', labelsize=8)
+    
+    st.pyplot(fig)
 
     # Define large language model (LLM)
         llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
