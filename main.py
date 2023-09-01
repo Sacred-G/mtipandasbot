@@ -48,7 +48,7 @@ def main():
             elif file_type == "text/csv":
                 data = pd.read_csv(file)
             else:
-                st.error("Unsupported file)
+                st.error("Unsupported file")
 
        #Display Data Head
                 st.write("Data Preview:")
