@@ -36,12 +36,12 @@ def main():
             st.markdown("You will need a OpenAI api key to upload and chat. You can obtain it from https://platform.openai.com/account/api-keys")
 
     # Upload File
-file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
+    file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
 
-if file:
-    file_type = file.type  # Get the MIME type of the uploaded file
+    if file:
+        file_type = file.type  # Get the MIME type of the uploaded file
     
-    if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+    if file_type == "application/                    vnd.openxmlformats-officedocument.spreadsheetml.sheet":
         data = pd.read_excel(file)
     elif file_type == "text/csv":
         data = pd.read_csv(file,encoding='ISO-8859-1')
