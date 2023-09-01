@@ -20,7 +20,7 @@ def main():
     
 
 
-    # Apply CSS
+    # Apply CS
     st.write(css, unsafe_allow_html=True)
 
     # Define chat history session state variable
