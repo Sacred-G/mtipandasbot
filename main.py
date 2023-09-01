@@ -47,8 +47,7 @@ def main():
             data = pd.read_excel(file)
         elif file_type == "text/csv":
             data = pd.read_csv(file)
-    else:
-        st.error("Unsupported file type")
+    
 
   
 
