@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import os
 from dotenv import load_dotenv
 from langchain.agents import create_pandas_dataframe_agent
 from langchain.chat_models import ChatOpenAI
@@ -9,23 +8,19 @@ from langchain.llms import OpenAI
 from langchain.agents.agent_types import AgentType
 from html_templates import css, user_template, bot_template
 
-
 def main():
     st.set_page_config(page_title="MTI Pandas Agent")
     logo_url = "https://i.imgur.com/9DLn81j.png"
     st.image(logo_url, width=400)
     st.subheader("MTI Pandas Agent")
     st.write("Upload a CSV or XLSX file and query answers from your data.")
-     
     
-
-
     # Apply CSS
     st.write(css, unsafe_allow_html=True)
-
+    
     # Define chat history session state variable
     st.session_state.setdefault('chat_history', [])
-
+    
     # Temperature slider
     with st.sidebar:
         with st.expander("Settings",  expanded=True):
@@ -34,108 +29,74 @@ def main():
             st.markdown("NOTE: Anything above 0.7 may produce hallucinations")
             st.divider()
             st.markdown("You will need a OpenAI api key to upload and chat. You can obtain it from https://platform.openai.com/account/api-keys")
-
+    
     # Upload File
     file = st.file_uploader("Upload CSV or XLSX file", type=["csv", "xlsx"])
-
-# Check if a file is uploaded
-    # Check if a file is uploaded
+    
     data = None
-    # Check if a file is uploaded
-    if file: 
+    if file:
         file_type = file.type
-
-        try: 
-            if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 
-                data = pd.read_excel(file) 
-            elif file_type == "text/csv": 
-                data = pd.read_csv(file) 
-            else: 
+        try:
+            if file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+                data = pd.read_excel(file)
+            elif file_type == "text/csv":
+                data = pd.read_csv(file)
+            else:
                 st.error("Unsupported file type")
                 return
-
-        # Display Data Head (Note: This is within the try block now)
-            st.write("Data Preview:") 
+            st.write("Data Preview:")
             st.dataframe(data.head(50))
-
-        except Exception as e: 
+        except Exception as e:
             st.error(f"An error occurred: {e}")
-    else: 
+    else:
         st.warning("No file uploaded yet.")
-
-# The rest of your code that uses 'data' should only be executed if 'data' is not None
+    
     if 'data' in locals() and data is not None:
-    # The rest of your code here...
-
-    
-    
         chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
         x_column = st.selectbox("Choose the x-axis column", data.columns)
         y_column = st.selectbox("Choose the y-axis column", data.columns)
-
-    if st.button("Generate Chart"):
-        fig, ax = plt.subplots()
-    
-    # Plot based on chart type
-        if chart_type == "Line Graph":
-            ax.plot(data[x_column], data[y_column])
-        elif chart_type == "Bar Chart":
-            ax.bar(data[x_column], data[y_column])
-        elif chart_type == "Scatter Plot":
-            ax.scatter(data[x_column], data[y_column])
-
-        ax.set_xlabel(x_column)
-        ax.set_ylabel(y_column)
-
-    # Rotate x and y labels for better visibility
-        for label in ax.get_xticklabels():
-            label.set_rotation(45)
-            label.set_horizontalalignment('right')
+        query = st.text_input("Enter a query:")  # Moved inside this block
         
-    # Optionally, you can also reduce font size for better fit
-        ax.tick_params(axis='x', labelsize=8)
-        ax.tick_params(axis='y', labelsize=8)
-    
-        st.pyplot(fig)
-
-    # Define large language model (LLM)
+        if st.button("Generate Chart"):
+            fig, ax = plt.subplots()
+            if chart_type == "Line Graph":
+                ax.plot(data[x_column], data[y_column])
+            elif chart_type == "Bar Chart":
+                ax.bar(data[x_column], data[y_column])
+            elif chart_type == "Scatter Plot":
+                ax.scatter(data[x_column], data[y_column])
+            ax.set_xlabel(x_column)
+            ax.set_ylabel(y_column)
+            for label in ax.get_xticklabels():
+                label.set_rotation(45)
+                label.set_horizontalalignment('right')
+            ax.tick_params(axis='x', labelsize=8)
+            ax.tick_params(axis='y', labelsize=8)
+            st.pyplot(fig)
+        
         llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
-
-
-    # Define pandas df agent
-        agent = create_pandas_dataframe_agent(llm, data, verbose=True) 
-
-    # Accept input from user
-        query = st.text_input("Enter a query:") 
-
-    # Execute Button Logic
-    if st.button("Execute") and query:
-        with st.spinner('Generating response...'):
-            try:
-                # Define prompt for agent
-                prompt = f'''
-                    Consider the uploaded pandas data, respond intelligently to user input
-                    \nCHAT HISTORY: {st.session_state.chat_history}
-                    \nUSER INPUT: {query}
-                    \nAI RESPONSE HERE:
-                '''
-
-                # Get answer from agent
-                answer = agent.run(prompt)
-
-                # Store conversation
-                st.session_state.chat_history.append(f"USER: {query}")
-                st.session_state.chat_history.append(f"AI: {answer}")
-
-                # Display conversation in reverse order
-                for i, message in enumerate(reversed(st.session_state.chat_history)):
-                    if i % 2 == 0: st.markdown(bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
-                    else: st.markdown(user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
-
-            # Error Handling
-            except Exception as e:
-                st.error(f"An error occurred: {str(e)}")
+        agent = create_pandas_dataframe_agent(llm, data, verbose=True)
+        
+        if st.button("Execute") and query:
+            with st.spinner('Generating response...'):
+                try:
+                    prompt = f'''
+                        Consider the uploaded pandas data, respond intelligently to user input
+                        \\nCHAT HISTORY: {st.session_state.chat_history}
+                        \\nUSER INPUT: {query}
+                        \\nAI RESPONSE HERE:
+                    '''
+                    answer = agent.run(prompt)
+                    st.session_state.chat_history.append(f"USER: {query}")
+                    st.session_state.chat_history.append(f"AI: {answer}")
+                    for i, message in enumerate(reversed(st.session_state.chat_history)):
+                        if i % 2 == 0:
+                            st.markdown(bot_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                        else:
+                            st.markdown(user_template.replace("{{MSG}}", message), unsafe_allow_html=True)
+                except Exception as e:
+                    st.error(f"An error occurred: {str(e)}")
 
 if __name__ == "__main__":
-    load_dotenv() # Import enviornmental variables
-    main()   
+    load_dotenv()
+    main()
