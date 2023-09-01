@@ -60,7 +60,7 @@ def main():
             st.error(f"An error occurred: {e}")
     else:
         st.warning("No file uploaded yet.")
-    data['your_column'] = data['your_column'].astype(float)
+
     
     if 'data' in locals() and data is not None:
         chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
