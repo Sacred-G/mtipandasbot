@@ -9,7 +9,7 @@ from langchain.llms import OpenAI
 from langchain.agents.agent_types import AgentType
 from html_templates import css, user_template, bot_template
 
-OPENAI_API_KEY= st.secrets("api_key")
+
 def main():
     st.set_page_config(page_title="MTI Pandas Agent")
     logo_url = "https://i.imgur.com/9DLn81j.png"
