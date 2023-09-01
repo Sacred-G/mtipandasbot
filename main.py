@@ -72,9 +72,7 @@ def main():
         y_column = st.selectbox("Choose the y-axis column", data.columns.tolist())
         query = st.text_input("Enter a query:")  # Moved inside this block
     
-        # Convert columns to numeric types, if they are not already.
-        data[x_column] = pd.to_numeric(data[x_column], errors='coerce')
-        data[y_column] = pd.to_numeric(data[y_column], errors='coerce')
+
     
         # Drop NaNs
         data.dropna(subset=[x_column, y_column], inplace=True)
