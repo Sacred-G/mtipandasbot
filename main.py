@@ -82,7 +82,7 @@ def main():
             st.pyplot(fig)
 
     # Define large language model (LLM)
-    llm = OpenAI(temperature=TEMP,openai_api_key=os.getenv('secrets.toml'))
+    llm = OpenAI(temperature=TEMP,openai_api_key=('secrets.toml'))
 
     # Define pandas df agent
     agent = create_pandas_dataframe_agent(llm, data, verbose=True) 
