@@ -71,34 +71,30 @@ def main():
         st.warning("No file uploaded yet.")
     
     if 'data' in locals() and data is not None:
-        x_column = st.selectbox("Choose the x-axis column", data.columns)
-        y_column = st.selectbox("Choose the y-axis column", data.columns)
-    
-        if x_column and y_column:
-            # Debugging
-            print(f"{x_column} dtype: {data[x_column].dtype}")
-            print(f"{y_column} dtype: {data[y_column].dtype}")
-    
-            # Conversion
-            data[x_column] = pd.to_numeric(data[x_column], errors='coerce')
-            data[y_column] = pd.to_numeric(data[y_column], errors='coerce')
-    
-            # Drop NaNs
-            data.dropna(subset=[x_column, y_column], inplace=True)
-    
         chart_type = st.selectbox("Choose a chart type", ["Line Graph", "Bar Chart", "Scatter Plot"])
-
-      
+        x_column = st.selectbox("Choose the x-axis column", data.columns.tolist())
+        y_column = st.selectbox("Choose the y-axis column", data.columns.tolist())
         query = st.text_input("Enter a query:")  # Moved inside this block
-   
-    # Drop NaNs
-        
     
-        if 'your_column' in data.columns:
-            data.dropna(subset=['your_column'], inplace=True) 
-            data['your_column'] = data['your_column'].astype(float)
-        else:
-            st.error(f"The column 'your_column' does not exist. Available columns are: {data.columns.tolist()}")
+        # Convert columns to numeric types, if they are not already.
+        data[x_column] = pd.to_numeric(data[x_column], errors='coerce')
+        data[y_column] = pd.to_numeric(data[y_column], errors='coerce')
+    
+        # Drop NaNs
+        data.dropna(subset=[x_column, y_column], inplace=True)
+
+        if st.button("Generate Chart"):
+            fig, ax = plt.subplots()
+            if chart_type == "Line Graph":
+                ax.plot(data[x_column], data[y_column])
+            elif chart_type == "Bar Chart":
+                ax.bar(data[x_column], data[y_column])
+            elif chart_type == "Scatter Plot":
+                ax.scatter(data[x_column], data[y_column])
+    
+            ax.set_xlabel(x_column)
+            ax.set_ylabel(y_column)
+            st.pyplot(fig)
         
 
         
