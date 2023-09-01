@@ -84,8 +84,8 @@ def main():
     elif chart_type == "Scatter Plot":
         ax.scatter(data[x_column], data[y_column])
 
-    ax.set_xlabel(x_column)
-    ax.set_ylabel(y_column)
+        ax.set_xlabel(x_column)
+        ax.set_ylabel(y_column)
 
     # Rotate x and y labels for better visibility
     for label in ax.get_xticklabels():
@@ -96,7 +96,7 @@ def main():
     # ax.tick_params(axis='x', labelsize=8)
     # ax.tick_params(axis='y', labelsize=8)
     
-    st.pyplot(fig)
+        st.pyplot(fig)
 
     # Define large language model (LLM)
         llm = OpenAI(temperature=TEMP, openai_api_key=st.secrets["openai_api_key"])
